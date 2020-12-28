@@ -7,9 +7,31 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get("/posts", (req, res) => {});
+const posts = {};
 
-app.post("/events", (req, res) => {});
+app.get("/posts", (req, res) => {
+  res.status(200).send(posts);
+});
+
+app.post("/events", (req, res) => {
+  const { type, data } = req.body;
+  if (type === "Post_Created") {
+    posts[data.id] = {
+      id: data.id,
+      posts: data.title,
+      comments: [],
+    };
+  }
+  if (type === "Comment_Created") {
+    const { id, content, postId } = data;
+    posts[postId].comments.push({
+      id,
+      content,
+    });
+  }
+
+  res.status(200).send({ message: "ok" });
+});
 
 app.listen("4002", () => {
   console.log("Listening on port 4002...");
