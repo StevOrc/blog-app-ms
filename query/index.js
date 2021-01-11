@@ -41,6 +41,7 @@ app.get('/posts', (req, res) => {
 });
 
 app.post('/events', (req, res) => {
+  console.log(`Query Service, Event : ${req.body.type}`);
   const { type, data } = req.body;
 
   handleEvent(type, data);
@@ -48,8 +49,10 @@ app.post('/events', (req, res) => {
   res.send({});
 });
 
-app.listen(4002, async () => {
-  console.log('Listening on 4002');
+const port = process.env.PORT || 4002;
+
+app.listen(port, async () => {
+  console.log(`Post Listening on port ${port}...`);
 
   const res = await axios.get('http://localhost:4005/events');
 

@@ -6,6 +6,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/events', async (req, res) => {
+  console.log(`Moderation Service, Event : ${req.body.type}`);
   const { type, data } = req.body;
 
   if (type === 'CommentCreated') {
@@ -25,6 +26,8 @@ app.post('/events', async (req, res) => {
   res.send({});
 });
 
-app.listen(4003, () => {
-  console.log('Listening on 4003');
+const port = process.env.PORT || 4003;
+
+app.listen(port, () => {
+  console.log(`Post Listening on port ${port}...`);
 });

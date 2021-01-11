@@ -12,6 +12,8 @@ app.post('/events', (req, res) => {
 
   events.push(event);
 
+  console.log(`Event Bus, Event : ${req.body.type}`);
+
   axios.post('http://localhost:4000/events', event);
   axios.post('http://localhost:4001/events', event);
   axios.post('http://localhost:4002/events', event);
@@ -24,6 +26,8 @@ app.get('/events', (req, res) => {
   res.send(events);
 });
 
-app.listen(4005, () => {
-  console.log('Listening on 4005');
+const port = process.env.PORT || 4005;
+
+app.listen(port, () => {
+  console.log(`Event bus listeneing on port ${port}...`);
 });

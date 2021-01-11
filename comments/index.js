@@ -38,7 +38,7 @@ app.post('/posts/:id/comments', async (req, res) => {
 });
 
 app.post('/events', async (req, res) => {
-  console.log('Event Received:', req.body.type);
+  console.log('Comment Service, Event : ', req.body.type);
 
   const { type, data } = req.body;
 
@@ -65,6 +65,8 @@ app.post('/events', async (req, res) => {
   res.send({});
 });
 
-app.listen(4001, () => {
-  console.log('Listening on 4001');
+const port = process.env.PORT || 4001;
+
+app.listen(port, () => {
+  console.log(`Post Listening on port ${port}...`);
 });
